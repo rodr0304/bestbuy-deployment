@@ -1,0 +1,12 @@
+{
+  "name": "store-front",
+  "version": "1.0.0",
+  "description": "Customer web app for Best Buy cloud-native app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

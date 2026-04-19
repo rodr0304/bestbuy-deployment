@@ -8,8 +8,10 @@ const PORT = process.env.PORT || 3000;
 const MONGO_URL = process.env.MONGO_URL || "mongodb://localhost:27017";
 const DB_NAME = process.env.DB_NAME || "bestbuy";
 const COLLECTION = "orders";
-//test
-let db;
+
+let db = null;
+let useMemoryStore = false;
+let memoryOrders = [];
 
 async function connectToMongo() {
   try {
@@ -18,16 +20,25 @@ async function connectToMongo() {
     db = client.db(DB_NAME);
     console.log("Connected to MongoDB");
   } catch (error) {
-    console.error("MongoDB connection failed:", error.message);
+    console.error("MongoDB connection failed. Using in-memory demo mode.");
+    useMemoryStore = true;
   }
 }
 
 app.get("/health", (req, res) => {
-  res.status(200).json({ status: "ok", service: "order-service" });
+  res.status(200).json({
+    status: "ok",
+    service: "order-service",
+    storage: useMemoryStore ? "memory" : "mongodb"
+  });
 });
 
 app.get("/orders", async (req, res) => {
   try {
+    if (useMemoryStore) {
+      return res.json(memoryOrders);
+    }
+
     const orders = await db.collection(COLLECTION).find({}).toArray();
     res.json(orders);
   } catch (error) {
@@ -38,12 +49,25 @@ app.get("/orders", async (req, res) => {
 app.post("/orders", async (req, res) => {
   try {
     const order = {
+      id: Date.now(),
       ...req.body,
       status: "pending",
       createdAt: new Date()
     };
+
+    if (useMemoryStore) {
+      memoryOrders.push(order);
+      return res.status(201).json({
+        message: "Order created (memory mode)",
+        order
+      });
+    }
+
     const result = await db.collection(COLLECTION).insertOne(order);
-    res.status(201).json({ message: "Order created", id: result.insertedId });
+    res.status(201).json({
+      message: "Order created",
+      id: result.insertedId
+    });
   } catch (error) {
     res.status(500).json({ error: "Failed to create order" });
   }

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: makeline-service
+  namespace: bestbuy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: makeline-service
+  template:
+    metadata:
+      labels:
+        app: makeline-service
+    spec:
+      containers:
+        - name: makeline-service
+          image: rodr0304/makeline-service:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+            - name: MONGO_URL
+              value: "mongodb://mongodb:27017"
+            - name: DB_NAME
+              value: "bestbuy"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: makeline-service
+  namespace: bestbuy
+spec:
+  selector:
+    app: makeline-service
+  ports:
+    - port: 3000
+      targetPort: 3000

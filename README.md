@@ -100,7 +100,7 @@ kubectl apply -f deployment-files/
 
 ## 🎥 Demo Video
 
-xxx
+https://youtu.be/djBXzP_m0XM
 
 ------------------------------------------------------------------------
 

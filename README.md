@@ -1,4 +1,4 @@
-# Best Buy Cloud-Native Application
+# Best Buy Cloud-Native Application.
 
 ## Overview
 This project is a cloud-native microservices-based application developed as part of the CST8915 Final Project. The application simulates a simplified Best Buy system using a modern architecture deployed on Azure Kubernetes Service (AKS).

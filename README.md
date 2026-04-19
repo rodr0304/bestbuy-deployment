@@ -1,103 +1,109 @@
-# Best Buy Cloud-Native Application.
+# 🛒 Best Buy Cloud-Native Application
 
-## Overview
-This project is a cloud-native microservices-based application developed as part of the CST8915 Final Project. The application simulates a simplified Best Buy system using a modern architecture deployed on Azure Kubernetes Service (AKS).
+## 📌 Overview
 
-The system consists of multiple microservices, frontend applications, and a MongoDB database, all containerized and deployed using Kubernetes.
+This project demonstrates the design and implementation of a
+cloud-native microservices-based application inspired by a Best Buy
+retail system.
 
----
+The application was developed using modern DevOps practices, including
+containerization with Docker and CI/CD automation with GitHub Actions.
 
-## Architecture
+The system is composed of independent services that communicate through
+REST APIs and are designed to be deployed in a Kubernetes environment.
 
-The application is composed of the following components:
+------------------------------------------------------------------------
 
-- Store-Front: Customer-facing web application
-- Store-Admin: Employee/admin web application
-- Product-Service: Manages product data
-- Order-Service: Handles order processing
-- Makeline-Service: Background worker for order fulfillment
-- MongoDB: Stateful database
+## 🏗️ System Architecture
 
----
+The application follows a microservices architecture pattern with the
+following components:
 
-## Technologies Used
+### Microservices
 
-- Docker
-- Kubernetes (AKS)
-- MongoDB
-- Node.js (Microservices)
-- GitHub Actions (CI/CD)
-- Azure CLI
+-   Store-Front (Customer-facing web application)
+-   Store-Admin (Admin interface for managing operations)
+-   Product-Service (Manages product catalog)
+-   Order-Service (Handles order creation)
+-   Makeline-Service (Processes pending orders)
+-   MongoDB (Database)
 
----
+------------------------------------------------------------------------
 
-## Deployment Instructions
+## 📊 Architecture Diagram
 
-### Prerequisites
+    [ Store-Front ] ---> [ Order-Service ] ---> [ Makeline-Service ]
+            |                      |
+            v                      v
+    [ Store-Admin ] ---> [ Product-Service ]
+                             |
+                             v
+                         [ MongoDB ]
 
-- Azure CLI installed
-- Docker installed
-- kubectl installed
-- Access to an AKS cluster
+------------------------------------------------------------------------
 
-### Steps
+## ⚙️ Technologies Used
 
-1. Clone the repository:
-git clone https://github.com/rodr0304/CST8915/FinalProject/bestbuy-deployment.git
+-   Node.js
+-   Express.js
+-   Docker
+-   Docker Hub
+-   GitHub Actions
+-   MongoDB
+-   Kubernetes
 
-2. Connect to your AKS cluster:
-az login
-az aks get-credentials --resource-group <your-rg> --name <your-cluster>
+------------------------------------------------------------------------
 
-3. Deploy MongoDB:
-kubectl apply -f deployment-files/mongodb/
+## 🚀 CI/CD Pipeline
 
-4. Deploy microservices:
+Each microservice includes a GitHub Actions workflow that: - Builds
+Docker images - Pushes them to Docker Hub - Runs automatically on push
+
+------------------------------------------------------------------------
+
+## 🐳 Docker Images
+
+-   https://hub.docker.com/r/rodr0304/store-front
+-   https://hub.docker.com/r/rodr0304/store-admin
+-   https://hub.docker.com/r/rodr0304/product-service
+-   https://hub.docker.com/r/rodr0304/order-service
+-   https://hub.docker.com/r/rodr0304/makeline-service
+
+------------------------------------------------------------------------
+
+## 📦 Project Structure
+
+bestbuy-deployment/ - store-front/ - store-admin/ - product-service/ -
+order-service/ - makeline-service/ - deployment-files/ - README.md
+
+------------------------------------------------------------------------
+
+## 💻 Running Locally
+
+``` bash
+cd store-front
+npm install
+PORT=3001 node server.js
+```
+
+Open: http://localhost:3001
+
+------------------------------------------------------------------------
+
+## ☸️ Kubernetes Deployment
+
+``` bash
 kubectl apply -f deployment-files/
+```
 
-5. Verify deployments:
-kubectl get pods
-kubectl get services
+------------------------------------------------------------------------
 
----
+## 🎥 Demo Video
 
-## CI/CD Pipeline
+xxx
 
-Each microservice has its own GitHub repository with a CI/CD pipeline configured using GitHub Actions.
+------------------------------------------------------------------------
 
-Pipeline steps:
-- Build Docker image
-- Push to Docker Hub
-- Deploy to AKS cluster
+## 👨‍💻 Author
 
----
-
-## Repositories and Docker Images
-
-| Service            | Repository Link | Docker Image |
-|-------------------|----------------|--------------|
-| Store-Front       | Link           | yourdockerhub/store-front |
-| Store-Admin       | Link           | yourdockerhub/store-admin |
-| Product-Service   | Link           | yourdockerhub/product-service |
-| Order-Service     | Link           | yourdockerhub/order-service |
-| Makeline-Service  | Link           | yourdockerhub/makeline-service |
-
----
-
-## Kubernetes Configuration
-
-All Kubernetes manifests are located in:
-deployment-files/
-
----
-
-## Demo Video
-
----YouTube link---
-
----
-
-## Author
-
-Diniz Rodrigues
-Algonquin College
+Diniz Martins
